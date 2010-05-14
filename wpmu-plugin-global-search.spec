@@ -2,7 +2,7 @@
 Summary:	WordPressMU Global Search
 Name:		wpmu-plugin-%{plugin}
 Version:	1.1
-Release:	0.1
+Release:	0.2
 License:	GPL v2+
 Group:		Applications/Publishing
 Source0:	http://downloads.wordpress.org/plugin/wpmu-global-search.zip
@@ -17,7 +17,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		wp_root		%{_datadir}/wpmu
 %define		wp_content	%{wp_root}/wp-content
 %define		pluginsdir	%{wp_content}/mu-plugins
-%define		plugindir	%{pluginsdir}/%{plugin}
+%define		plugindir	%{pluginsdir}/wpmu-%{plugin}
 %define		_sysconfdir	/etc/webapps/wpmu
 
 %description
