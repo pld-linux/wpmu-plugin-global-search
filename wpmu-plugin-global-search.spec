@@ -10,6 +10,7 @@ Source0:	http://downloads.wordpress.org/plugin/wpmu-global-search.zip
 URL:		http://wordpress.org/extend/plugins/wpmu-global-search/
 BuildRequires:	rpmbuild(macros) >= 1.553
 BuildRequires:	sed >= 4.0
+BuildRequires:	unzip
 Requires:	wpmu >= 2.6
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
