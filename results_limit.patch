@@ -1,0 +1,33 @@
+--- wpmu-global-search/wpmu-global-search.php~	2010-05-19 15:27:07.000000000 +0300
++++ wpmu-global-search/wpmu-global-search.php	2010-05-19 15:46:00.683911267 +0300
+@@ -140,6 +140,9 @@
+ function wpmu_globalsearch_page() {
+     global $wp_query, $wpdb;
+ 
++    $options = get_option('widget_wp_wpmu_globalsearch');
++    $results_limit = empty($options['results_limit']) ? 2 : $options['results_limit'];
++
+     if(!empty($wp_query->query_vars['uws'])) {
+         $term = $wp_query->query_vars['uws'];
+         $request = "SELECT {$wpdb->base_prefix}v_posts.* from {$wpdb->base_prefix}v_posts left join {$wpdb->base_prefix}users on {$wpdb->base_prefix}users.ID={$wpdb->base_prefix}v_posts.post_author ".
+@@ -157,9 +160,10 @@
+                 $author = get_userdata($s->post_author);
+                 if($blogid != $s->blog_id) {
+                     $blogid = $s->blog_id;
++                    $count = 0;
+                     echo "<h2 class='searchblog'>". get_blog_option($blogid, 'blogname') ."</h2>";
+                 }?>
+-
++                <?php if ($count < $results_limit) { ?>
+                 <div <?php post_class() ?>>
+                     <h2 id="post-<?php echo $s->ID.$s->blog_id; ?>" class="searchtitle"><a href="<?php echo get_blog_permalink( $s->blog_id, $s->ID ); ?>" rel="bookmark" title="Permanent Link to <?php echo $s->post_title ?>"><?php echo $s->post_title ?></a></h2>
+                     <small class="date"><?php echo date('j/m/y, G:i' ,strtotime($s->post_date)); ?></small>
+@@ -180,6 +184,8 @@
+                     </div>
+                 </div>
+             <?php
++                    $count++;
++                }
+             }
+         }
+     } else {

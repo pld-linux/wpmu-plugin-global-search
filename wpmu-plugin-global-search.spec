@@ -2,12 +2,13 @@
 Summary:	WordPressMU Global Search
 Name:		wpmu-plugin-%{plugin}
 Version:	1.1
-Release:	0.3
+Release:	0.5
 License:	GPL v2+
 Group:		Applications/Publishing
 Source0:	http://downloads.wordpress.org/plugin/wpmu-global-search.zip
 # Source0-md5:	6132d081987834cc72412a7c92ba6853
 Patch0:		localize.patch
+Patch1:		results_limit.patch
 URL:		http://wordpress.org/extend/plugins/wpmu-global-search/
 BuildRequires:	rpmbuild(macros) >= 1.553
 BuildRequires:	sed >= 4.0
@@ -31,6 +32,7 @@ multiple contact forms.
 %setup -qn wpmu-%{plugin}
 %undos readme.txt
 %patch0 -p1
+%patch1 -p1
 
 %install
 rm -rf $RPM_BUILD_ROOT
