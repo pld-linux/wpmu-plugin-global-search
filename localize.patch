@@ -1,0 +1,47 @@
+--- wpmu-global-search/includes/functions.php~	2010-04-16 19:07:18.000000000 +0300
++++ wpmu-global-search/includes/functions.php	2010-05-19 15:19:21.394073196 +0300
+@@ -90,7 +90,7 @@
+ 	return $before . apply_filters( 'edit_post_link', $link, $s->ID ) . $after;
+ }
+ 
+-function wpmu_globalsearch_get_comments_link($s, $zero = 'No Comments', $one = '1 Comment', $more = '% Comments', $css_class = '', $none = 'Comments Off' ) {
++function wpmu_globalsearch_get_comments_link($s, $css_class = '', $none = 'Comments Off' ) {
+     global $wpcommentsjavascript, $wpcommentspopupfile;
+ 
+ 	$number = $s->comment_count;
+@@ -129,12 +129,8 @@
+ 	echo apply_filters( 'comments_popup_link_attributes', '' );
+ 
+ 	echo ' title="' . sprintf( __('Comment on %s'), $title ) . '">';
+-    if ( $number > 1 )
+-		$output = str_replace('%', number_format_i18n($number), ( false === $more ) ? __('% Comments') : $more);
+-	elseif ( $number == 0 )
+-		$output = ( false === $zero ) ? __('No Comments') : $zero;
+-	else // must be one
+-		$output = ( false === $one ) ? __('1 Comment') : $one;
++
++	$output = sprintf(_n('%s Comment', '%s Comments', $number), number_format_i18n($number));
+ 
+ 	echo apply_filters('comments_number', $output, $number);
+ 	echo '</a>';
+--- wpmu-global-search/wpmu-global-search.php~	2010-04-16 19:07:18.000000000 +0300
++++ wpmu-global-search/wpmu-global-search.php	2010-05-19 15:19:21.394073196 +0300
+@@ -175,7 +175,7 @@
+ 
+                     <div class="postmetadatasearch">
+                         <small class="comments">
+-                            <?php wpmu_globalsearch_get_comments_link($s, 'Sin comentarios', '1 Comentario', '% Comentarios'); ?>
++                            <?php wpmu_globalsearch_get_comments_link($s); ?>
+                         </small>
+                     </div>
+                 </div>
+--- wpmu-global-search/langs/wpmu-global-search.pot~	2010-04-16 19:07:18.000000000 +0300
++++ wpmu-global-search/langs/wpmu-global-search.pot	2010-05-19 15:22:27.977374293 +0300
+@@ -47,3 +47,7 @@
+ #: usal-wpmu-search.php:157 usal-wpmu-search.php:191
+ msgid "Sorry, but you are looking for something that isn't her"
+ msgstr ""
++
++#, php-format
++msgid "%s Comment"
++msgid_plural "%s Comments"
